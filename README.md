@@ -34,24 +34,25 @@ installed from the ports system. A more detailed and friendly version, from whic
 this document was based, can be found on the tutorial notes from the BSD Now 
 Podcast at http://www.bsdnow.tv/tutorials/jails
 
-# cd /usr/ports/sysutils/ezjail
-# make install clean
+**# cd /usr/ports/sysutils/ezjail**
 
-After the install, enable it by appending the string ezjail_enable=YES to
-/etc/rc.conf. After that proceed with the following set of commands in order to
+**# make install clean**
+
+After the install, enable it by appending the string **ezjail_enable=YES** to
+**/etc/rc.conf**. After that proceed with the following set of commands in order to
 create the plexserver Jail.
 
-# ezjail-admin install 
+**# ezjail-admin install**
 
 When creating a Jail, ezjail allows you to bind an IP address to a physical
 interface. On the example server we have three interfaces, em0, em1 and xl0. We
 will bind the new Jail to the em1 interface using the IP address 10.5.11.20.
 
-# ezjail-admin create plexserver 'em1|10.5.11.20'
+**# ezjail-admin create plexserver 'em1|10.5.11.20'**
 
 Once the Jail gets created we need to start it: 
 
-# ezjail-admin start plexserver
+**# ezjail-admin start plexserver**
 
 If everything worked you can verify that the Jail is running by using the 
 command jls or ezjail-admin list. The final touches will involve enabling
@@ -60,13 +61,13 @@ will fetch information such as movie covers, imdb descriptions and other meta
 tags. Copy of create your resolv.conf to the Jail directory (in this setup this
 directory lies at /usr/jails/plexmediaserver).
 
-# cp /etc/resolv.conf /usr/jails/plexserver/etc/
+**# cp /etc/resolv.conf /usr/jails/plexserver/etc/**
 
 As an extra requirement we will enable the OpenSSH server on this Jail. You can do
 this from the Jail console itself:
 
-root@plexmediaserver:/root # ezjail-admin console plexserver
-root@plexmediaserver:/root # grep ssh /etc/defaults/rc.conf >> /etc/rc.conf
+**# ezjail-admin console plexserver**
+**# grep ssh /etc/defaults/rc.conf >> /etc/rc.conf**
 
 After this you must edit the /etc/rc.conf and enable the sshd server by changing
 sshd_enable="NO" to sshd_enable="YES". You can now exit from the Jail by
@@ -79,20 +80,24 @@ We will make use of the ports tree in order to install the Plex Media Server.
 The following ezjail command will install a copy of the tree that can then be
 used by plexserver Jail:
 
-# ezjail-admin install -P
+**# ezjail-admin install -P**
+
 With the ports tree now in place we can log back into the plexserver Jail and
 install it.
 
-# ezjail-admin console plexserver
-root@plexserver:/root # cd /usr/ports/multimedia/plexmediaserver/
-root@plexserver:/usr/ports/multimedia/plexmediaserver # make install clean
+**# ezjail-admin console plexserver**
+
+**root@plexserver:/root # cd /usr/ports/multimedia/plexmediaserver/**
+
+**root@plexserver:/usr/ports/multimedia/plexmediaserver # make install clean**
 
 And finally enable and start the server:
 
-root@plexserver:/root # echo 'plexmediaserver_enable="YES" >> /etc/rc.conf
-root@plexserver:/root # /usr/local/etc/rc.d/plexmediaserver start
+**root@plexserver:/root # echo 'plexmediaserver_enable="YES" >> /etc/rc.conf**
 
-The server should now be accessible on: http://10.5.11.5:32400/web/index.html
+**root@plexserver:/root # /usr/local/etc/rc.d/plexmediaserver start**
+
+The server should now be accessible on: **http://10.5.11.5:32400/web/index.html**
 
 
 Configuring and adding media to the server
@@ -101,7 +106,7 @@ You should now share with the Jail your media files, which could be done in a
 plethora of ways such as by mounting external hard drives or sharing files
 sitting on a ZFS zpool. The rest of the Plex Serverr configuration can be done
 entirelly via it's web interface on http://10.5.11.5:32400/web/index.html. For
-more information please visit http://www.plexapp.com/
+more information please visit [http://www.plexapp.com/](http://www.plexapp.com/)
 
 
 Configuring the Plex Player
@@ -114,19 +119,19 @@ card. The performance penalty for running anything below that could ruin this
 experience. If connecting the Raspberry Pi to a TV set with HDMI you can use
 the TV's remote control to browse and control the Plex interface. Also, if using
 a USB wifi dongle, check first if it is fully supported under Linux. A good list
-can be fetched here:
-http://elinux.org/RPi_VerifiedPeripherals
+can be fetched [http://elinux.org/RPi_VerifiedPeripherals](http://elinux.org/RPi_VerifiedPeripherals)
 
 There are a few options to download it on a Mac OSX/Linux and Windows. The
 instructions are fairly straight forward and they can be found at
-http://rasplex.com/get-started/download-rasplex.html
+[http://rasplex.com/get-started/download-rasplex.html](http://rasplex.com/get-started/download-rasplex.html)
 
-Another possibility is to install it manually by grabbing the file at:
-http://sourceforge.net/projects/rasplex/files/release/. At this time I'm using
-the file rasplex-0.3.1.img.gz
+Another possibility is to install it manually by grabbing the file at
+[http://sourceforge.net/projects/rasplex/files/release/](http://sourceforge.net/projects/rasplex/files/release/.) 
+At this time I'm using the file rasplex-0.3.1.img.gz
 
-$ md5 rasplex-0.3.1.img.gz
-MD5 (rasplex-0.3.1.img.gz) = dba9a3f124225aaf9775ca63ecccce0b
+**$ md5 rasplex-0.3.1.img.gz**
+
+**MD5 (rasplex-0.3.1.img.gz) = dba9a3f124225aaf9775ca63ecccce0b**
 
 After downloading the img.gz file you need to burn it to the SD card, there are
 many ways of doing this such as by using dd. Once that step is done you can
@@ -137,7 +142,7 @@ Raspberry  Pi should be able to detect the presence of a Plex server on your
 network. If this however is not your case, you can configure the Raspberry Pi
 to look for the Plex Server by navigating into the Settings section and then
 into the Manage server list menu. For more information please consult the Plex
-Support at http://www.plexapp.com/help/
+Support at [http://www.plexapp.com/help/](http://www.plexapp.com/help/)
 
 At this point you should be able to enjoy your new media center setup! This
 setup could be expanded or changed on both, the client side by using different 
